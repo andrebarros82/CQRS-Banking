@@ -31,71 +31,112 @@
         <exec.mainClass>br.com.cbcompany.cqrsbanking.CqrsbankingApplication</exec.mainClass>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
+        <!-- ========================= -->
+        <!-- SPRING BOOT CORE          -->
+        <!-- ========================= -->
+        <!-- Web (REST APIs, Controllers, JSON) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Segurança (autenticação, autorização) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- Persistência (JPA + Hibernate) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- Banco de dados em memória (para dev/testes) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ========================= -->
+        <!-- CACHE E REDIS             -->
+        <!-- ========================= -->
+        <!-- Integração do Spring com Redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>  
-        
+        <!-- Suporte a datas Java 8+ (necessário para serialização no Redis) -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>  
-        
-        <!-- JJWT -->
+        </dependency>
+
+        <!-- Redis embarcado (somente para ambiente local/desenvolvimento) -->
+        <dependency>
+            <groupId>it.ozimov</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>0.7.3</version>
+        </dependency>
+
+        <!-- ========================= -->
+        <!-- SEGURANÇA JWT             -->
+        <!-- ========================= -->
+        <!-- API do JJWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.13.0</version>
         </dependency>
+
+        <!-- Implementação runtime do JJWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
             <version>0.13.0</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Suporte à serialização JSON do JJWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.13.0</version>
             <scope>runtime</scope>
         </dependency>
-        
-        <!-- SpringDoc -->
+
+        <!-- ========================= -->
+        <!-- DOCUMENTAÇÃO (Swagger)    -->
+        <!-- ========================= -->
+        <!-- Integração com Swagger/OpenAPI (SpringDoc) -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.8.13</version>
         </dependency>
-        
+
+        <!-- ========================= -->
+        <!-- TESTES                    -->
+        <!-- ========================= -->
+        <!-- Testes gerais do Spring Boot -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
+
+        <!-- Testes de segurança do Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
     
     <build>
         <plugins>
