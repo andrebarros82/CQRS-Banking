@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import java.io.IOException;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import redis.embedded.RedisServer;
 
 /**
@@ -15,6 +16,7 @@ import redis.embedded.RedisServer;
  * @author andre
  */
 @Configuration
+@Profile("local")
 public class EmbeddedRedisConfig {
 
     private RedisServer redisServer;
