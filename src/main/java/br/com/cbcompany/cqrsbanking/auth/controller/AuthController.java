@@ -4,6 +4,7 @@
  */
 package br.com.cbcompany.cqrsbanking.auth.controller;
 
+import br.com.cbcompany.cqrsbanking.auth.dto.ErrorAuthResponseDTO;
 import br.com.cbcompany.cqrsbanking.auth.dto.JwtResponseDTO;
 import br.com.cbcompany.cqrsbanking.auth.dto.LoginRequestDTO;
 import br.com.cbcompany.cqrsbanking.security.jwt.JwtUtil;
@@ -71,7 +72,7 @@ public class AuthController {
                 @ApiResponse(
                         responseCode = "401",
                         description = "Credenciais inválidas",
-                        content = @Content
+                        content = @Content(schema = @Schema(implementation = ErrorAuthResponseDTO.class))
                 )
             }
     )

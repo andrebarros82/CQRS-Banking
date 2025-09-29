@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author andre
  */
 @Service
-public class DepositCommandService {
+public class UserFinancialCommandService {
 
     /** Serviço responsável pela manipulação de dados do usuário */
     private final UserService userService;
@@ -54,7 +54,7 @@ public class DepositCommandService {
      * @param transactionService Serviço de persistência de transações
      * @param transactionCacheService Serviço de cache das transações
      */
-    public DepositCommandService(UserService userService, TransactionService transactionService, TransactionCacheService transactionCacheService) {
+    public UserFinancialCommandService(UserService userService, TransactionService transactionService, TransactionCacheService transactionCacheService) {
         this.userService = userService;
         this.transactionService = transactionService;
         this.transactionCacheService = transactionCacheService;

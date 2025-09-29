@@ -7,6 +7,8 @@ package br.com.cbcompany.cqrsbanking.query.controller;
 import br.com.cbcompany.cqrsbanking.query.dto.UserViewResponseDTO;
 import br.com.cbcompany.cqrsbanking.query.service.UserQueryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -59,8 +61,11 @@ public class UserQueryController {
     )
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Usuário retornado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
-    })
+        @ApiResponse(
+                responseCode = "401",
+                description = "Usuário não autenticado",
+                content = @Content(schema = @Schema(implementation = ErrorUserResponseDTO.class))
+        ),})
     public ResponseEntity<UserViewResponseDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userQueryService.getUserById(id));
     }

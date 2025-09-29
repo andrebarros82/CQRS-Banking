@@ -7,6 +7,8 @@ package br.com.cbcompany.cqrsbanking.query.controller;
 import br.com.cbcompany.cqrsbanking.cache.dto.HistoricoResponseDTO;
 import br.com.cbcompany.cqrsbanking.query.service.HistoricoQueryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -64,8 +66,21 @@ public class HistoricoQueryController {
     )
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Histórico retornado com sucesso"),
-        @ApiResponse(responseCode = "401", description = "Usuário não autenticado"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+        @ApiResponse(
+                responseCode = "400",
+                description = "Saldo insuficiente ou dados inválidos",
+                content = @Content(schema = @Schema(implementation = ErrorUserResponseDTO.class))
+        ),
+        @ApiResponse(
+                responseCode = "401",
+                description = "Usuário não autenticado",
+                content = @Content(schema = @Schema(implementation = ErrorUserResponseDTO.class))
+        ),
+        @ApiResponse(
+                responseCode = "404",
+                description = "Usuário não encontrado",
+                content = @Content(schema = @Schema(implementation = ErrorUserResponseDTO.class))
+        )
     })
     public ResponseEntity<HistoricoResponseDTO> getHistorico(Authentication authentication) {
         String login = authentication.getName();

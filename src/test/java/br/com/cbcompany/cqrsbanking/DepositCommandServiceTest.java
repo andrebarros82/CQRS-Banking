@@ -7,7 +7,7 @@ package br.com.cbcompany.cqrsbanking;
 import br.com.cbcompany.cqrsbanking.cache.service.TransactionCacheService;
 import br.com.cbcompany.cqrsbanking.command.dto.DepositRequestDTO;
 import br.com.cbcompany.cqrsbanking.command.dto.WithdrawRequestDTO;
-import br.com.cbcompany.cqrsbanking.command.service.DepositCommandService;
+import br.com.cbcompany.cqrsbanking.command.service.UserFinancialCommandService;
 import br.com.cbcompany.cqrsbanking.exception.UserNotFoundException;
 import br.com.cbcompany.cqrsbanking.model.TransactionType;
 import br.com.cbcompany.cqrsbanking.model.UserModel;
@@ -34,14 +34,14 @@ class DepositCommandServiceTest {
     private UserService userService;
     private TransactionService transactionService;
     private TransactionCacheService transactionCacheService;
-    private DepositCommandService depositCommandService;
+    private UserFinancialCommandService depositCommandService;
 
     @BeforeEach
     void setup() {
         userService = mock(UserService.class);
         transactionService = mock(TransactionService.class);
         transactionCacheService = mock(TransactionCacheService.class);
-        depositCommandService = new DepositCommandService(userService, transactionService, transactionCacheService);
+        depositCommandService = new UserFinancialCommandService(userService, transactionService, transactionCacheService);
     }
 
     @Test
