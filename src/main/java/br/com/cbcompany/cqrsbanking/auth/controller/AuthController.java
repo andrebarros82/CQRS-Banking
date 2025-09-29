@@ -78,23 +78,18 @@ public class AuthController {
     )
     @PostMapping("/login")
     public JwtResponseDTO login(@Valid @RequestBody LoginRequestDTO loginRequest) {
-        try {
-            // Autentica as credenciais do usuário
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.login(),
-                            loginRequest.password()
-                    )
-            );
 
-            // Gera o token JWT
-            String token = jwtUtil.generateToken(loginRequest.login());
+        // Autentica as credenciais do usuário
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.login(),
+                        loginRequest.password()
+                )
+        );
 
-            return new JwtResponseDTO(token);
+        // Gera o token JWT
+        String token = jwtUtil.generateToken(loginRequest.login());
 
-        } catch (AuthenticationException e) {
-            // Lança exceção em caso de falha na autenticação
-            throw new RuntimeException("Credenciais inválidas");
-        }
+        return new JwtResponseDTO(token);
     }
 }

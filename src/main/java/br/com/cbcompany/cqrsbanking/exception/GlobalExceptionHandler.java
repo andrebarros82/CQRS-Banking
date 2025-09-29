@@ -4,11 +4,13 @@
  */
 package br.com.cbcompany.cqrsbanking.exception;
 
+import br.com.cbcompany.cqrsbanking.auth.dto.ErrorAuthResponseDTO;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 /**
  * Manipulador global de exceções para a API REST.
  *
- * <p>Esta classe centraliza o tratamento de exceções lançadas pelos controllers,
- * fornecendo respostas HTTP padronizadas com informações detalhadas sobre o erro.</p>
+ * <p>
+ * Esta classe centraliza o tratamento de exceções lançadas pelos controllers,
+ * fornecendo respostas HTTP padronizadas com informações detalhadas sobre o
+ * erro.</p>
  *
  * Autor: andre
  */
@@ -28,19 +32,21 @@ public class GlobalExceptionHandler {
     /**
      * Trata erros de validação de argumentos em requisições HTTP.
      *
-     * <p>Quando uma requisição falha nas validações de Bean Validation,
-     * este método constrói um corpo de resposta detalhado contendo:
+     * <p>
+     * Quando uma requisição falha nas validações de Bean Validation, este
+     * método constrói um corpo de resposta detalhado contendo:
      * <ul>
-     *     <li>timestamp: data e hora do erro</li>
-     *     <li>status: código HTTP (400)</li>
-     *     <li>error: descrição do tipo de erro</li>
-     *     <li>message: mensagem geral do erro</li>
-     *     <li>fields: mapa contendo o nome do campo e a mensagem de validação</li>
+     * <li>timestamp: data e hora do erro</li>
+     * <li>status: código HTTP (400)</li>
+     * <li>error: descrição do tipo de erro</li>
+     * <li>message: mensagem geral do erro</li>
+     * <li>fields: mapa contendo o nome do campo e a mensagem de validação</li>
      * </ul>
      * </p>
      *
      * @param ex a exceção lançada durante a validação de argumentos
-     * @return {@link ResponseEntity} com corpo detalhado e status HTTP 400 (Bad Request)
+     * @return {@link ResponseEntity} com corpo detalhado e status HTTP 400 (Bad
+     * Request)
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
@@ -64,7 +70,8 @@ public class GlobalExceptionHandler {
      * Trata exceções do tipo {@link UserNotFoundException}.
      *
      * @param ex a exceção lançada quando um usuário não é encontrado
-     * @return {@link ResponseEntity} com corpo detalhado e status HTTP 404 (Not Found)
+     * @return {@link ResponseEntity} com corpo detalhado e status HTTP 404 (Not
+     * Found)
      */
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleUserNotFound(UserNotFoundException ex) {
@@ -80,8 +87,10 @@ public class GlobalExceptionHandler {
     /**
      * Trata exceções do tipo {@link IllegalArgumentException}.
      *
-     * @param ex a exceção lançada em caso de argumentos inválidos ou inconsistentes
-     * @return {@link ResponseEntity} com corpo detalhado e status HTTP 400 (Bad Request)
+     * @param ex a exceção lançada em caso de argumentos inválidos ou
+     * inconsistentes
+     * @return {@link ResponseEntity} com corpo detalhado e status HTTP 400 (Bad
+     * Request)
      */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
@@ -95,19 +104,23 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Trata quaisquer exceções não tratadas anteriormente.
+     * Intercepta exceções do tipo {@link AuthenticationException} e retorna um
+     * objeto {@link ErrorResponseDTO} com detalhes do erro.
      *
-     * @param ex a exceção genérica capturada
-     * @return {@link ResponseEntity} com corpo detalhado e status HTTP 500 (Internal Server Error)
+     * @param ex a exceção de autenticação capturada
+     * @return {@link ResponseEntity} contendo {@link ErrorResponseDTO} e status
+     * HTTP 401
      */
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        body.put("error", "Internal Server Error");
-        body.put("message", ex.getMessage());
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorAuthResponseDTO> handleAuthenticationException(AuthenticationException ex) {
+        // Cria o corpo da resposta de erro
+        ErrorAuthResponseDTO errorResponse = new ErrorAuthResponseDTO(
+                ex.getMessage(), // Mensagem da exceção
+                HttpStatus.UNAUTHORIZED.value(), // Código HTTP 401
+                java.time.LocalDateTime.now().toString() // Timestamp do erro
+        );
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+        // Retorna ResponseEntity com status 401 e corpo JSON
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 }

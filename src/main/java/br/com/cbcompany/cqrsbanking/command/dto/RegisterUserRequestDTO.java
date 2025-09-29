@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  * DTO (Data Transfer Object) utilizado para o registro de um novo usuário no
@@ -69,6 +70,7 @@ public record RegisterUserRequestDTO(
                 regexp = "\\d{11}",
                 message = "O CPF deve conter exatamente 11 dígitos numéricos."
         )
+        @CPF(message = "CPF Inválido.")
         String cpf,
         /**
          * Login do usuário para autenticação.
