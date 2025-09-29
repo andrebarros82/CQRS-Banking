@@ -29,7 +29,7 @@ Além disso, a API possui:
 
 ## Tecnologias Utilizadas
 
-* Java 24
+* Java 17
 * Spring Boot 3.5.6
 * Spring Security com JWT
 * Spring Data JPA
@@ -37,6 +37,7 @@ Além disso, a API possui:
 * Redis (embutido para dev/local)
 * Maven
 * Springdoc OpenAPI / Swagger
+* JUnit + Mockito (para testes unitários)
 
 ---
 
@@ -140,6 +141,24 @@ A documentação Swagger está disponível em:
 * Configuração de `SecurityFilterChain`
 * `JwtAuthenticationFilter` para validação de tokens JWT
 * `PasswordEncoder` BCrypt para senhas
+
+---
+
+## Testes Unitários
+
+A aplicação possui testes unitários implementados com **JUnit** e **Mockito** para validar a lógica de negócio sem depender do banco de dados real:
+
+### `DepositCommandServiceTest`
+
+* Testa depósitos com saldo positivo
+* Testa exceção de usuário não encontrado
+* Testa saques e verificação de registro de transações no cache e serviço
+
+### `UserCommandServiceTest`
+
+* Testa cadastro de usuários com sucesso
+* Valida duplicidade de login
+* Valida duplicidade de CPF
 
 ---
 
