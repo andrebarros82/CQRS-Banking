@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public class TransactionModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private UserModel user;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -52,11 +52,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
 

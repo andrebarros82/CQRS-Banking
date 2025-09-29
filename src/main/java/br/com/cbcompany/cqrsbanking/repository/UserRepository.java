@@ -4,7 +4,7 @@
  */
 package br.com.cbcompany.cqrsbanking.repository;
 
-import br.com.cbcompany.cqrsbanking.model.User;
+import br.com.cbcompany.cqrsbanking.model.UserModel;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,11 +12,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author andre
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserModel, Long> {
 
-    Optional<User> findByLogin(String login);
+    Optional<UserModel> findByLogin(String login);
 
-    Optional<User> findByCpf(String cpf);
+    Optional<UserModel> findByCpf(String cpf);
 
     boolean existsByLogin(String login);
 

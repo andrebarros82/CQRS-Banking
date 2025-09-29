@@ -4,8 +4,8 @@
  */
 package br.com.cbcompany.cqrsbanking.repository;
 
-import br.com.cbcompany.cqrsbanking.model.Transaction;
-import br.com.cbcompany.cqrsbanking.model.User;
+import br.com.cbcompany.cqrsbanking.model.TransactionModel;
+import br.com.cbcompany.cqrsbanking.model.UserModel;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author andre
  */
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+public interface TransactionRepository extends JpaRepository<TransactionModel, Long> {
 
-    List<Transaction> findByUserOrderByDataHoraDesc(User user);
+    List<TransactionModel> findByUserOrderByDataHoraDesc(UserModel user);
 }

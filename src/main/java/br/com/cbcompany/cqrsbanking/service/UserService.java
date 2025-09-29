@@ -4,46 +4,84 @@
  */
 package br.com.cbcompany.cqrsbanking.service;
 
-import br.com.cbcompany.cqrsbanking.model.Transaction;
-import br.com.cbcompany.cqrsbanking.model.TransactionType;
-import br.com.cbcompany.cqrsbanking.model.User;
-import br.com.cbcompany.cqrsbanking.repository.TransactionRepository;
+import br.com.cbcompany.cqrsbanking.model.UserModel;
 import br.com.cbcompany.cqrsbanking.repository.UserRepository;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
+ * Serviço responsável por gerenciar usuários.
  *
- * @author andre
+ * <p>
+ * Esta classe encapsula a lógica de acesso e manipulação de dados do usuário
+ * através do repositório {@link UserRepository}.</p>
+ *
+ * Autor: andre
  */
 @Service
 public class UserService {
 
+    /**
+     * Repositório para persistência e consulta de usuários.
+     */
     private final UserRepository userRepository;
 
+    /**
+     * Construtor que injeta o repositório de usuários.
+     *
+     * @param userRepository repositório para gerenciar usuários
+     */
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> findByLogin(String login) {
+    /**
+     * Busca um usuário pelo login.
+     *
+     * @param login login do usuário
+     * @return Optional contendo o usuário, se encontrado
+     */
+    public Optional<UserModel> findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
-    public Optional<User> findByCpf(String cpf) {
+    /**
+     * Busca um usuário pelo CPF.
+     *
+     * @param cpf CPF do usuário
+     * @return Optional contendo o usuário, se encontrado
+     */
+    public Optional<UserModel> findByCpf(String cpf) {
         return userRepository.findByCpf(cpf);
     }
 
+    /**
+     * Verifica se já existe um usuário com o login informado.
+     *
+     * @param login login a ser verificado
+     * @return true se o login já existir, false caso contrário
+     */
     public boolean existsByLogin(String login) {
         return userRepository.existsByLogin(login);
     }
 
+    /**
+     * Verifica se já existe um usuário com o CPF informado.
+     *
+     * @param cpf CPF a ser verificado
+     * @return true se o CPF já existir, false caso contrário
+     */
     public boolean existsByCpf(String cpf) {
         return userRepository.existsByCpf(cpf);
     }
 
-    public User save(User user) {
+    /**
+     * Salva ou atualiza um usuário no banco de dados.
+     *
+     * @param user usuário a ser salvo
+     * @return usuário persistido
+     */
+    public UserModel save(UserModel user) {
         return userRepository.save(user);
     }
 }

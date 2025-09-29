@@ -4,7 +4,7 @@
  */
 package br.com.cbcompany.cqrsbanking.security;
 
-import br.com.cbcompany.cqrsbanking.model.User;
+import br.com.cbcompany.cqrsbanking.model.UserModel;
 import java.util.Collection;
 import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,19 +16,18 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+    private final UserModel user;
 
-    public CustomUserDetails(User user) {
+    public CustomUserDetails(UserModel user) {
         this.user = user;
     }
 
-    public User getDomainUser() {
+    public UserModel getDomainUser() {
         return user;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Nenhum papel por enquanto
+    public Collection<? extends GrantedAuthority> getAuthorities() {     
         return Collections.emptyList();
     }
 

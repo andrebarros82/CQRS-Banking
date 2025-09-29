@@ -2,20 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.com.cbcompany.cqrsbanking.command.dto;
+package br.com.cbcompany.cqrsbanking.auth.dto;
 
-import java.math.BigDecimal;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  *
  * @author andre
  */
-public record RegisterUserCommand(
-        String nomeCompleto,
-        String cpf,
+public record LoginRequestDTO(@NotBlank(message = "Login é obrigatório")
         String login,
-        String senha,
-        BigDecimal saldoMonetarioAtual
-        ) {
+        @NotBlank(message = "Senha é obrigatória")
+        String password) {
 
 }
